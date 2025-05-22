@@ -25,11 +25,30 @@ public class TrackerTest {
 
     @Test
     public void testAdd() {
+        int startSize = tracker.size();
         TimeEntry entry = new TimeEntry();
         entry.setDescription("Entry Test");
         entry.setRate(80.0f);
         entry.setTime(3);
         tracker.add(entry);
-        assertTrue(tracker.size() > 0);
+        assertEquals(startSize + 1, tracker.size());
+    }
+
+    @Test
+    public void testRemove() {
+        TimeEntry entry = new TimeEntry();
+        tracker.add(entry);
+        int sizeBefore = tracker.size();
+        tracker.remove(entry);
+        assertEquals(sizeBefore - 1, tracker.size());
+    }
+
+    @Test
+    public void testGet() {
+        TimeEntry entry = new TimeEntry();
+        entry.setDescription("Lookup Entry");
+        tracker.add(entry);
+        TimeEntry result = tracker.get(tracker.size() - 1);
+        assertEquals("Lookup Entry", result.getDescription());
     }
 }
